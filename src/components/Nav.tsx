@@ -3,13 +3,14 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Nav() {
-	const topbar_thing_button =
-		"w-1/8 min-w-max h-max hover:bg-ctp-base hover:border-b-ctp-mauve border-b-4 transition-border duration-100"; // let me tell you how much I HATE tailwind
+	const anim_bottom =
+		"before:absolute before:-z-1 before:w-full before:bottom-0 before:left-0 before:h-0 hover:before:h-1 before:transition-h before:duration-200 before:bg-ctp-mauve";
+	const topbar_thing_button = `relative z-0 w-1/8 min-w-max h-max hover:bg-ctp-base hover:text-ctp-text transition-border duration-100 ${anim_bottom}`; // let me tell you how much I HATE tailwind
 	const a = "size-full py-5 block";
 
 	var [state, set] = useState("#about");
 	const thing = (name: string) =>
-		`${topbar_thing_button} ${state === name ? "border-b-ctp-mauve" : "border-b-transparent"}`;
+		`${topbar_thing_button} ${state === name ? "before:h-1" : ""}`;
 	useEffect(() => {
 		addEventListener("hashchange", () => {
 			set(window.location.hash);
