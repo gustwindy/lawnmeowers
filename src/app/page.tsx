@@ -13,7 +13,7 @@ export default function About() {
 
 	return (
 		<>
-			<Section id="about" active={isActive("#about")}>
+			<Section centered={true} id="about" active={isActive("#about")}>
 				<Image
 					src="/cail.png"
 					alt="logo"
@@ -21,7 +21,7 @@ export default function About() {
 					height={256}
 					loading="eager"
 				/>
-				<h1 className="text-4xl">Lawn Meowers Council</h1>
+				<h1 className="text-4xl text-ctp-mauve">Lawn Meowers Council</h1>
 				<p className="text-2xl">meowing commeownity :3</p>
 			</Section>
 
@@ -34,8 +34,8 @@ export default function About() {
 				<h2 className="text-3xl">Founders</h2>
 			</Section>
 
-			<Section id="discord" active={isActive("#discord")}>
-				<h2 className="text-3xl">Discord</h2>
+			<Section centered={true} id="discord" active={isActive("#discord")}>
+				<h2 className="text-3xl mb-5">Discord</h2>
 
 				<iframe
 					src="https://discord.com/widget?id=1512271425723957399&theme=dark"
