@@ -3,13 +3,13 @@
 import { useHash } from "@/hooks/useHash";
 
 export default function Nav() {
-	const topbar_thing_button =
+	const topbarThingButton =
 		"w-1/8 min-w-max h-max hover:bg-ctp-base hover:border-b-ctp-mauve border-b-4 transition-border duration-100"; // let me tell you how much I HATE tailwind
 	const a = "size-full py-5 block";
 
 	const hash = useHash();
 	const thing = (name: string) =>
-		`${topbar_thing_button} ${hash === name ? "border-b-ctp-mauve" : "border-b-transparent"}`;
+		`${topbarThingButton} ${hash === name ? "border-b-ctp-mauve" : "border-b-transparent"}`;
 
 	return (
 		<nav className="text-xl big-font bg-ctp-mantle">
