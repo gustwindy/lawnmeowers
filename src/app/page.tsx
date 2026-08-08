@@ -8,6 +8,7 @@ import { useHash } from "../hooks/useHash";
 
 export default function About() {
 	const hash = useHash();
+	console.log(hash);
 	const isActive = (name: string) =>
 		(name === "#about" && hash === "") || hash === name;
 
