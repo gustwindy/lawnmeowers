@@ -16,7 +16,8 @@
 	"dependencies": {
 		"next": "16.3.0",
 		"react": "19.2.8",
-		"react-dom": "19.2.8"
+		"react-dom": "19.2.8",
+		"use-lanyard": "^2.0.0"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.4.2",
