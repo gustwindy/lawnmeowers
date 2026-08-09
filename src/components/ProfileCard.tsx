@@ -14,6 +14,20 @@ export default function ProfileCard({
 }) {
 	const iconSize = expand ? 256 : 128;
 	const presence = usePresence(profile.discordId);
+
+	const [extension, setExtension] = useState("png");
+
+	const avatar = presence?.discord_user?.avatar
+		? `https://cdn.discordapp.com/avatars/${profile.discordId}/${presence.discord_user.avatar}.png`
+		: null;
+
+	const avatarSrc =
+		extension === "png"
+			? `/avatars/${profile.username}.png`
+			: extension === "jpg"
+				? `/avatars/${profile.username}.jpg`
+				: (avatar ?? `/avatars/${profile.username}.png`);
+
 	const activity =
 		presence?.activities.find((a) => a.type === 0) ??
 		presence?.activities.find((a) => a.type === 2) ??
@@ -94,13 +108,26 @@ export default function ProfileCard({
 			>
 				<span className="relative">
 					<Image
-						src={`/avatars/${profile.username}.png`}
+						src={avatarSrc}
 						alt={profile.displayName}
 						width={iconSize}
 						height={iconSize}
 						priority
+						onError={() =>
+							setExtension(extension === "png" ? "jpg" : "discord")
+						}
 						className="flex-1 rounded-2xl border border-ctp-surface1"
 					/>
+
+					{/*{presence?.discord_user.avatar_decoration_data?.asset && (
+						<Image
+							src={`https://cdn.discordapp.com/avatar-decoration-presets/${presence.discord_user.avatar_decoration_data.asset}.png`}
+							alt=""
+							width={iconSize}
+							height={iconSize}
+							className="pointer-events-none absolute inset-0 z-10"
+						/>
+					)}*/}
 
 					<span
 						title={online ? "Online" : "Offline"}
