@@ -4,7 +4,7 @@
 			"username": "nyarw",
 			"displayName": "nyarw",
 			"bio": "meow meow :3",
-			"role": "Founder",
+			"roles": ["Founder", "Member"],
 			"discordId": "571052016382640128",
 			"showPresence": true,
 			"socials": [
