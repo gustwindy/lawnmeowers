@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 
 import ProfileCard from "@/components/ProfileCard";
+import Section from "@/components/Section";
 import profilesData from "@/data/profiles.json";
 import type { Profile } from "@/types/profile";
 
@@ -16,5 +17,9 @@ export default async function ProfilePage({
 
 	if (!profile) notFound();
 
-	return <ProfileCard profile={profile} />;
+	return (
+		<section className="flex-1 flex justify-center items-center flex-col">
+			<ProfileCard profile={profile} expand={false} />
+		</section>
+	);
 }

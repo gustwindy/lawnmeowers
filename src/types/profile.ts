@@ -13,6 +13,7 @@ export type Profile = {
 	username: string;
 	displayName: string;
 	bio: string;
+	role: string;
 	discordId?: string;
 	showPresence: boolean;
 	socials: Social[];
