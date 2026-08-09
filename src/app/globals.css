@@ -22,3 +22,7 @@ h3,
 .big-font {
 	font-family: CherryBombOne, sans-serif;
 }
+
+::selection {
+	background-color: #cba6f757;
+}

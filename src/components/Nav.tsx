@@ -12,7 +12,7 @@ export default function Nav() {
 
 	const hash = useHash();
 	const thing = (name: string) =>
-		`${topbarThingButton} ${hash === name ? "before:h-1" : ""}`;
+		`${topbarThingButton} ${hash === name ? "text-ctp-mauve before:h-1" : ""}`;
 
 	return (
 		<nav className="text-xl big-font bg-ctp-mantle">
