@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 
 import ProfileCard from "@/components/ProfileCard";
-import Section from "@/components/Section";
 import profilesData from "@/data/profiles.json";
 import type { Profile } from "@/types/profile";
 

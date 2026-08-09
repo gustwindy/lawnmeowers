@@ -11,8 +11,10 @@ export default function Nav() {
 	const a = "size-full p-5 block";
 
 	const hash = useHash();
+	const isActive = (name: string) =>
+		(name === "#about" && hash === "") || hash === name;
 	const thing = (name: string) =>
-		`${topbarThingButton} ${hash === name ? "text-ctp-mauve before:h-1" : ""}`;
+		`${topbarThingButton} ${isActive(name) ? "text-ctp-mauve before:h-1" : ""}`;
 
 	return (
 		<nav className="text-xl big-font bg-ctp-mantle flex justify-center">
