@@ -13,8 +13,8 @@ export type Profile = {
 	username: string;
 	displayName: string;
 	bio: string;
-	roles: [string];
-	discordId?: string;
+	roles: string[];
+	discordId?: `${bigint}`;
 	showPresence: boolean;
 	socials: Social[];
 	music?: Music;
