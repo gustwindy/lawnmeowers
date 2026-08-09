@@ -18,7 +18,7 @@ export default async function ProfilePage({
 
 	return (
 		<section className="flex-1 flex justify-center items-center flex-col">
-			<ProfileCard profile={profile} expand={false} />
+			<ProfileCard profile={profile} expand={true} />
 		</section>
 	);
 }

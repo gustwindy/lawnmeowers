@@ -11,6 +11,7 @@ export default function ProfileCard({
 	profile: Profile;
 	expand: boolean;
 }) {
+	const iconSize = expand ? 256 : 128;
 	const presence = usePresence(profile.discordId);
 	const activity =
 		presence?.activities.find((a) => a.type === 0) ??
@@ -18,19 +19,32 @@ export default function ProfileCard({
 		presence?.activities.find((a) => a.type !== 4);
 
 	return (
-		<div className="inline-flex m-2 flex-col items-center justify-center w-max p-6 border-ctp-surface0 border rounded-3xl bg-ctp-base">
+		<div className="min-w-max min-h-max inline-flex m-2 flex-col items-center justify-center p-6 border-ctp-surface0 border rounded-3xl bg-ctp-base">
 			<div className="flex gap-5 items-center">
 				<Image
 					src={`/avatars/${profile.username}.jpg`}
 					alt={profile.displayName}
-					width={128}
-					height={128}
+					width={iconSize}
+					height={iconSize}
 					priority
 					className="flex-1 rounded-2xl border border-ctp-surface1"
 				/>
-				<div className="flex flex-col pr-5">
-					<p className="opacity-50">{profile.role}</p>
-					<h2 className="text-4xl text-ctp-mauve-50">{profile.displayName}</h2>
+				<div
+					className={(expand ? "text-2xl ml-5" : "") + " flex flex-col pr-5"}
+				>
+					<p className="opacity-50" title={profile.roles.join(", ")}>
+						{expand ? profile.roles.join(", ") : profile.roles[0]}
+						<span className="text-xs opacity-75 ml-1">
+							{expand ? "" : `+${profile.roles.length - 1}`}
+						</span>
+					</p>
+					<h2
+						className={
+							(expand ? "text-6xl" : "text-4xl") + " text-ctp-mauve-50"
+						}
+					>
+						{profile.displayName}
+					</h2>
 					<p className="opacity-75">@{profile.username}</p>
 				</div>
 			</div>
@@ -63,7 +77,10 @@ export default function ProfileCard({
 								title={`${social.handle} on ${social.platform}`}
 							/>
 							<span className={expand ? "" : "hidden"}>
-								{social.platform.slice(0, 1).toUpperCase() +
+								{"@" +
+									social.handle +
+									" on " +
+									social.platform.slice(0, 1).toUpperCase() +
 									social.platform.slice(1).toLowerCase()}
 							</span>
 						</a>
