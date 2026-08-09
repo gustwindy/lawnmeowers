@@ -1,0 +1,23 @@
+{
+	"profiles": [
+		{
+			"username": "nyarw",
+			"displayName": "nyarw",
+			"bio": "meow meow :3",
+			"discordId": "571052016382640128",
+			"showPresence": true,
+			"socials": [
+				{
+					"platform": "spotify",
+					"handle": "nyarw",
+					"url": "https://open.spotify.com/user/h4seqeeaqz4uzen8qofx794co"
+				},
+				{
+					"platform": "github",
+					"handle": "nyarw",
+					"url": "https://github.com/nyarw"
+				}
+			]
+		}
+	]
+}

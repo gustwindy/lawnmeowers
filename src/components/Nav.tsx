@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { useHash } from "@/hooks/useHash";
 
 export default function Nav() {
@@ -16,24 +18,24 @@ export default function Nav() {
 		<nav className="text-xl big-font bg-ctp-mantle">
 			<ul className="flex w-full justify-center text-center gap-5 text-4xl">
 				<li className={thing("#about")}>
-					<a href="#about" className={a}>
+					<Link href="/#about" className={a}>
 						about
-					</a>
+					</Link>
 				</li>
 				<li className={thing("#members")}>
-					<a href="#members" className={a}>
+					<Link href="/#members" className={a}>
 						members
-					</a>
+					</Link>
 				</li>
 				<li className={thing("#founders")}>
-					<a href="#founders" className={a}>
+					<Link href="/#founders" className={a}>
 						founders
-					</a>
+					</Link>
 				</li>
 				<li className={thing("#discord")}>
-					<a href="#discord" className={a}>
+					<Link href="/#discord" className={a}>
 						discord
-					</a>
+					</Link>
 				</li>
 			</ul>
 		</nav>
