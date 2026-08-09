@@ -42,7 +42,15 @@ export default function ProfileCard({
 		return () => clearInterval(interval);
 	}, [activity?.timestamps?.start]);
 
-	const online = presence?.discord_status !== "offline";
+	const status: Record<string, { color: string; label: string }> = {
+		online: { color: "bg-ctp-green", label: "Online" },
+		idle: { color: "bg-ctp-yellow", label: "Idle" },
+		dnd: { color: "bg-ctp-red", label: "Do Not Disturb" },
+		offline: { color: "bg-ctp-surface1", label: "Offline" },
+	};
+
+	const currentStatus =
+		status[presence?.discord_status ?? "offline"] ?? status.offline;
 
 	const activityImageUrl = activity ? getActivityImageUrl(activity) : null;
 
@@ -130,8 +138,8 @@ export default function ProfileCard({
 					)}*/}
 
 					<span
-						title={online ? "Online" : "Offline"}
-						className={`${online ? "bg-ctp-green" : "bg-ctp-overlay1"} ${expand ? "size-12 border-8" : "size-8 border-6"} absolute -bottom-2 -right-2 rounded-full border-ctp-base block`}
+						title={currentStatus.label}
+						className={`${currentStatus.color} ${expand ? "size-12 border-8" : "size-8 border-6"} absolute -bottom-2 -right-2 rounded-full border-ctp-base block`}
 					/>
 				</span>
 
