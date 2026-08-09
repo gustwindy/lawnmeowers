@@ -1,5 +1,7 @@
+"use client";
 import Image from "next/image";
 
+import { usePresence } from "@/hooks/usePresence";
 import type { Profile } from "@/types/profile";
 
 export default function ProfileCard({
@@ -9,6 +11,12 @@ export default function ProfileCard({
 	profile: Profile;
 	expand: boolean;
 }) {
+	const presence = usePresence(profile.discordId);
+	const activity =
+		presence?.activities.find((a) => a.type === 0) ??
+		presence?.activities.find((a) => a.type === 2) ??
+		presence?.activities.find((a) => a.type !== 4);
+
 	return (
 		<div className="inline-flex m-2 flex-col items-center justify-center w-max p-6 border-ctp-surface0 border rounded-3xl bg-ctp-base">
 			<div className="flex gap-5 items-center">
@@ -28,6 +36,14 @@ export default function ProfileCard({
 			</div>
 			<span className="bg-ctp-surface1 w-9/10 m-3 h-px" />
 			<p className="italic opacity-75">"{profile.bio}"</p>
+
+			{activity && (
+				<div>
+					<p>{activity.name}</p>
+					{activity.details && <p>{activity.details}</p>}
+					{activity.state && <p>{activity.state}</p>}
+				</div>
+			)}
 
 			<ul className={expand ? "flex-col flex w-full" : ""}>
 				{profile.socials.map((social) => (
