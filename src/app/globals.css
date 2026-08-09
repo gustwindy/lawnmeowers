@@ -26,3 +26,28 @@ h3,
 ::selection {
 	background-color: #cba6f757;
 }
+
+@media (max-width: 700) {
+	section {
+		zoom: 75%;
+	}
+	nav ul {
+		max-width: 100vw;
+		overflow-x: scroll;
+		justify-content: left;
+		align-items: baseline;
+	}
+}
+
+@media (max-width: 500) {
+	section {
+		zoom: 50%;
+		min-width: 500px;
+		overflow-x: scroll;
+		margin: 0;
+	}
+	html,
+	body {
+		overflow-x: hidden; /* i guess */
+	}
+}

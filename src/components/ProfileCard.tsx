@@ -134,18 +134,19 @@ export default function ProfileCard({
 					</div>
 
 					{expand && activity && activityImageUrl && (
-						<div className="flex mt-auto bg-ctp-surface0 p-2 gap-2 rounded-2xl">
-							<div className="relative aspect-square self-stretch shrink-0 min-w-16">
+						<div className="flex items-center mt-auto min-h-max bg-ctp-surface0 p-2 gap-2 rounded-2xl">
+							<div className="relative w-32">
 								<Image
 									src={activityImageUrl}
 									alt={activity.name}
-									fill
-									sizes="256px"
+									width={256}
+									height={256}
 									className="rounded-xl object-cover"
 									priority
 								/>
 							</div>
-							<div>
+
+							<div className="flex flex-col">
 								<p className="text-xl text-ctp-mauve">
 									{activityHeader ? `${activityHeader} ` : ""}
 									{activity.name}
