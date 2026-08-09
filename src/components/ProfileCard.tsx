@@ -10,7 +10,7 @@ export default function ProfileCard({
 	expand: boolean;
 }) {
 	return (
-		<div className="flex flex-col items-center justify-center w-max p-6 border-ctp-surface0 border rounded-3xl bg-ctp-base">
+		<div className="inline-flex m-2 flex-col items-center justify-center w-max p-6 border-ctp-surface0 border rounded-3xl bg-ctp-base">
 			<div className="flex gap-5 items-center">
 				<Image
 					src={`/avatars/${profile.username}.jpg`}
