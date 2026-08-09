@@ -19,6 +19,26 @@
 					"url": "https://github.com/nyarw"
 				}
 			]
+		},
+		{
+			"username": "guhw",
+			"displayName": "windy",
+			"bio": "hiii !!!! :3",
+			"roles": ["Founder", "Member"],
+			"discordId": "656132997422252042",
+			"showPresence": true,
+			"socials": [
+				{
+					"platform": "github",
+					"handle": "gustwindy",
+					"url": "https://github.com/gustwindy"
+				},
+				{
+					"platform": "website",
+					"handle": "guhw.dev",
+					"url": "https://guhw.dev/"
+				}
+			]
 		}
 	]
 }
