@@ -2,7 +2,12 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-import { getActivityImageUrl, usePresence } from "@/hooks/usePresence";
+import { usePresence } from "@/hooks/usePresence";
+import {
+	type DisplayNameStyles,
+	displayNameStyle,
+	getActivityImageUrl,
+} from "@/lib/discord";
 import type { Profile } from "@/types/profile";
 
 export default function ProfileCard({
@@ -14,6 +19,11 @@ export default function ProfileCard({
 }) {
 	const iconSize = expand ? 256 : 128;
 	const presence = usePresence(profile.discordId);
+
+	const nameStyle = displayNameStyle(
+		(presence?.discord_user as Record<string, unknown> | undefined)
+			?.display_name_styles as DisplayNameStyles,
+	);
 
 	const [extension, setExtension] = useState("png");
 
@@ -159,6 +169,7 @@ export default function ProfileCard({
 						)}
 						<h2
 							className={`${expand ? `text-6xl` : "text-4xl"} text-ctp-mauve-50`}
+							style={nameStyle}
 						>
 							{profile.displayName}
 						</h2>

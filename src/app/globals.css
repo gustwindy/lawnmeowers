@@ -1,26 +1,72 @@
 @import "tailwindcss";
 @import "@catppuccin/tailwindcss/mocha.css";
 
+/* site fonts */
 @font-face {
-	font-family: CherryBombOne;
-	src: url("/fonts/CherryBombOne.ttf");
+	font-family: "Sniglet";
+	src: url("/fonts/Sniglet.ttf");
 }
 
+/* discord fonts */
 @font-face {
-	font-family: Sniglet;
-	src: url("/fonts/Sniglet.ttf");
+	font-family: "gg sans";
+	src: url("/fonts/discord/gg sans.woff2") format("woff2");
+}
+@font-face {
+	font-family: "Headbang";
+	src: url("/fonts/discord/Headbang.woff2") format("woff2");
+}
+@font-face {
+	font-family: "Jellybean";
+	src: url("/fonts/discord/Jellybean.woff2") format("woff2");
+}
+@font-face {
+	font-family: "Modern";
+	src: url("/fonts/discord/Modern.woff2") format("woff2");
+}
+@font-face {
+	font-family: "Medieval";
+	src: url("/fonts/discord/Medieval.woff2") format("woff2");
+}
+@font-face {
+	font-family: "8Bit";
+	src: url("/fonts/discord/8Bit.woff2") format("woff2");
+}
+@font-face {
+	font-family: "Sakura";
+	src: url("/fonts/discord/Sakura.woff2") format("woff2");
+}
+@font-face {
+	font-family: "Vampyre";
+	src: url("/fonts/discord/Vampyre.woff2") format("woff2");
+}
+@font-face {
+	font-family: "Tempo";
+	src: url("/fonts/discord/Tempo.woff2") format("woff2");
+}
+@font-face {
+	font-family: "Monkey Bars";
+	src: url("/fonts/discord/Monkey Bars.woff2") format("woff2");
+}
+@font-face {
+	font-family: "Mainframe";
+	src: url("/fonts/discord/Mainframe.woff2") format("woff2");
+}
+@font-face {
+	font-family: "Journal";
+	src: url("/fonts/discord/Journal.woff2") format("woff2");
 }
 
 @custom-variant dark (&:where(.mocha, .mocha *));
 
 body {
-	font-family: Sniglet, sans-serif;
+	font-family: "Sniglet", sans-serif;
 }
 h1,
 h2,
 h3,
 .big-font {
-	font-family: CherryBombOne, sans-serif;
+	font-family: "Sakura", sans-serif;
 }
 
 ::selection {
