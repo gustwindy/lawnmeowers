@@ -20,7 +20,7 @@ export default function ProfileCard({
 
 	return (
 		<div className="min-w-max min-h-max inline-flex m-2 flex-col items-center justify-center p-6 border-ctp-surface0 border rounded-3xl bg-ctp-base">
-			<div className="flex gap-5 items-center">
+			<div className="flex gap-5 items-start">
 				<Image
 					src={`/avatars/${profile.username}.jpg`}
 					alt={profile.displayName}
@@ -29,9 +29,7 @@ export default function ProfileCard({
 					priority
 					className="flex-1 rounded-2xl border border-ctp-surface1"
 				/>
-				<div
-					className={(expand ? "text-2xl ml-5" : "") + " flex flex-col pr-5"}
-				>
+				<div className={`${expand ? "text-2xl ml-5" : ""} flex flex-col pr-5`}>
 					<p className="opacity-50" title={profile.roles.join(", ")}>
 						{expand ? profile.roles.join(", ") : profile.roles[0]}
 						<span className="text-xs opacity-75 ml-1">
@@ -39,9 +37,7 @@ export default function ProfileCard({
 						</span>
 					</p>
 					<h2
-						className={
-							(expand ? "text-6xl" : "text-4xl") + " text-ctp-mauve-50"
-						}
+						className={`${expand ? `text-6xl` : "text-4xl"} text-ctp-mauve-50`}
 					>
 						{profile.displayName}
 					</h2>
