@@ -1,7 +1,8 @@
 "use client";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
-import { usePresence } from "@/hooks/usePresence";
+import { getActivityImageUrl, usePresence } from "@/hooks/usePresence";
 import type { Profile } from "@/types/profile";
 
 export default function ProfileCard({
@@ -18,15 +19,78 @@ export default function ProfileCard({
 		presence?.activities.find((a) => a.type === 2) ??
 		presence?.activities.find((a) => a.type !== 4);
 
+	const [now, setNow] = useState(Date.now());
+
+	useEffect(() => {
+		if (!activity?.timestamps?.start) return;
+
+		const interval = setInterval(() => setNow(Date.now()), 1000);
+		return () => clearInterval(interval);
+	}, [activity?.timestamps?.start]);
+
 	const online = presence?.discord_status !== "offline";
-	//const displayStatus = activity ? activity.name : (online ? "Online" : "Offline") // ill be honest this is a little bit gay
+
+	const activityImageUrl = activity ? getActivityImageUrl(activity) : null;
+
+	const activityHeader = (() => {
+		if (!activity) return "";
+		switch (activity.type) {
+			case 2:
+				return "Listening to";
+			case 3:
+				return "Watching";
+			case 5:
+				return "Competing in";
+			default:
+				return;
+		}
+	})();
+
+	const activityTimestamp = (() => {
+		if (!activity?.timestamps) return undefined;
+
+		const { start, end } = activity.timestamps;
+
+		const formatTime = (ms: number) => {
+			const totalSec = Math.floor(ms / 1000);
+			const h = Math.floor(totalSec / 3600);
+			const m = Math.floor((totalSec % 3600) / 60);
+			const s = String(totalSec % 60).padStart(2, "0");
+
+			if (h > 0) {
+				const padM = String(m).padStart(2, "0");
+				return `${h}:${padM}:${s}`;
+			}
+
+			return `${m}:${s}`;
+		};
+
+		// listening or watching
+		if (start && end) {
+			const currentMs = Math.max(0, Math.min(now - start, end - start));
+			const totalMs = end - start;
+			return `${formatTime(currentMs)} / ${formatTime(totalMs)}`;
+		}
+
+		// activities with elapsed time
+		if (start) {
+			const elapsedMs = Math.max(0, now - start);
+			return `${formatTime(elapsedMs)}`;
+		}
+
+		return undefined;
+	})();
 
 	return (
 		<div
-			className={`${expand ? "cursor" : "cursor-pointer hover:scale-105 transition-transform duration-200"} min-w-max min-h-max inline-flex m-2 flex-col items-center justify-center p-6 border-ctp-surface0 border rounded-3xl bg-ctp-base`}
+			className={`${
+				expand
+					? "w-full max-w-3xl cursor items-start"
+					: "min-w-max cursor-pointer hover:scale-105 transition-transform duration-200"
+			} min-h-max inline-flex m-2 flex-col items-center justify-center p-6 border-ctp-surface0 border rounded-3xl bg-ctp-base`}
 		>
 			<div
-				className={`${expand ? "items-start gap-1" : "items-center gap-5"} flex`}
+				className={`${expand ? "items-start w-full" : "items-center"} gap-5 flex relative`}
 			>
 				<span className="relative">
 					<Image
@@ -44,27 +108,64 @@ export default function ProfileCard({
 					/>
 				</span>
 
-				<div className={`${expand ? "text-2xl ml-5" : ""} flex flex-col pr-5`}>
-					<p className="opacity-50" title={profile.roles.join(", ")}>
-						{expand ? profile.roles.join(", ") : profile.roles[0]}
-						<span className="text-xs opacity-75 ml-1">
-							{expand || profile.roles.length <= 1
-								? ""
-								: `+${profile.roles.length - 1}`}
-						</span>
-					</p>
-					<h2
-						className={`${expand ? `text-6xl` : "text-4xl"} text-ctp-mauve-50`}
-					>
-						{profile.displayName}
-					</h2>
-					<p className="opacity-75">@{profile.username}</p>
-					<p className={expand ? "italic opacity-50 text-base" : "hidden"}>
-						"{profile.bio}"
-					</p>
+				<div
+					className={expand ? "flex flex-col flex-1 self-stretch" : "contents"}
+				>
+					<div className={expand ? "flex flex-col" : "flex flex-col pr-5"}>
+						{!expand && (
+							<p className="opacity-50" title={profile.roles.join(", ")}>
+								{profile.roles[0]}
+								<span className="text-xs opacity-75 ml-1">
+									{profile.roles.length <= 1
+										? ""
+										: `+${profile.roles.length - 1}`}
+								</span>
+							</p>
+						)}
+						<h2
+							className={`${expand ? `text-6xl` : "text-4xl"} text-ctp-mauve-50`}
+						>
+							{profile.displayName}
+						</h2>
+						<p className="opacity-75">@{profile.username}</p>
+						<p className={expand ? "italic opacity-50 text-base" : "hidden"}>
+							"{profile.bio}"
+						</p>
+					</div>
+
+					{expand && activity && activityImageUrl && (
+						<div className="flex mt-auto bg-ctp-surface0 p-2 gap-2 rounded-2xl">
+							<div className="relative aspect-square self-stretch shrink-0 min-w-16">
+								<Image
+									src={activityImageUrl}
+									alt={activity.name}
+									fill
+									sizes="256px"
+									className="rounded-xl object-cover"
+									priority
+								/>
+							</div>
+							<div>
+								<p className="text-xl text-ctp-mauve">
+									{activityHeader ? `${activityHeader} ` : ""}
+									{activity.name}
+								</p>
+								{activity.details && <p>{activity.details}</p>}
+								<p>{activity.state}</p>
+								{activityTimestamp !== undefined && <p>{activityTimestamp}</p>}
+							</div>
+						</div>
+					)}
 				</div>
+
+				{expand && (
+					<p className="absolute top-0 right-0 opacity-50 text-right">
+						{profile.roles.join(", ")}
+					</p>
+				)}
 			</div>
-			<span className="bg-ctp-surface1 w-9/10 m-3 h-px" />
+
+			<span className="bg-ctp-surface1 w-[95%] m-4 h-px self-center" />
 			<p className={expand ? "hidden" : "italic opacity-75"}>"{profile.bio}"</p>
 
 			<ul className={expand ? "flex-col flex w-full" : ""}>
@@ -75,7 +176,8 @@ export default function ProfileCard({
 					>
 						<a
 							href={social.url}
-							className="bg-ctp-surface0 hover:bg-ctp-surface2 transition-background-color duration-100 rounded-full border-ctp-surface2 border m-1 p-1.5 flex gap-2 items-center"
+							target="_blank"
+							className="bg-ctp-surface0 hover:bg-ctp-surface2 transition-background-color duration-100 hover:scale-y-104 hover:scale-x-102 rounded-full border-ctp-surface2 border m-1 p-1.5 flex gap-2 items-center"
 						>
 							<Image
 								src={`/icons/${social.platform}.png`}
@@ -83,6 +185,7 @@ export default function ProfileCard({
 								width={32}
 								height={32}
 								title={`${social.handle} on ${social.platform}`}
+								priority
 							/>
 							<span className={expand ? "" : "hidden"}>
 								{`@${social.handle} on ${social.platform.slice(0, 1).toUpperCase() + social.platform.slice(1).toLowerCase()}`}
