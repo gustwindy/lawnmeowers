@@ -12,6 +12,8 @@ import {
 } from "@/lib/discord";
 import type { Profile } from "@/types/profile";
 
+const AVATAR_EXTENSIONS = ["png", "gif", "webp", "jpg", "jpeg"];
+
 const STATUS: Record<string, { color: string; label: string }> = {
 	online: { color: "bg-ctp-green", label: "Online" },
 	idle: { color: "bg-ctp-yellow", label: "Idle" },
@@ -23,41 +25,6 @@ const ACTIVITY_TYPE: Record<number, string> = {
 	3: "Watching",
 	5: "Competing in",
 };
-
-function getActivityTimestamp(now: number, activity?: Activity) {
-	if (!activity?.timestamps) return undefined;
-
-	const { start, end } = activity.timestamps;
-
-	const formatTime = (ms: number) => {
-		const totalSec = Math.floor(ms / 1000);
-		const h = Math.floor(totalSec / 3600);
-		const m = Math.floor((totalSec % 3600) / 60);
-		const s = String(totalSec % 60).padStart(2, "0");
-
-		if (h > 0) {
-			const padM = String(m).padStart(2, "0");
-			return `${h}:${padM}:${s}`;
-		}
-
-		return `${m}:${s}`;
-	};
-
-	// listening or watching
-	if (start && end) {
-		const currentMs = Math.max(0, Math.min(now - start, end - start));
-		const totalMs = end - start;
-		return `${formatTime(currentMs)} / ${formatTime(totalMs)}`;
-	}
-
-	// activities with elapsed time
-	if (start) {
-		const elapsedMs = Math.max(0, now - start);
-		return `${formatTime(elapsedMs)}`;
-	}
-
-	return undefined;
-}
 
 export default function ProfileCard({
 	profile,
@@ -136,15 +103,21 @@ function UserIcon({
 	presence?: Types.Presence;
 }) {
 	const iconSize = expand ? 256 : 128;
-	const [extension, setExtension] = useState("png");
+	const [extIndex, setExtIndex] = useState(0);
+	const extension = AVATAR_EXTENSIONS[extIndex];
 
-	const avatarFile = `/avatars/${profile.username}.${extension}`;
-	const avatarDiscord = presence?.discord_user?.avatar
-		? `https://cdn.discordapp.com/avatars/${profile.discordId}/${presence.discord_user.avatar}.png`
-		: `/avatars/${profile.username}.png`;
-	const avatarSrc = extension === "discord" ? avatarDiscord : avatarFile;
+	const avatar = presence?.discord_user?.avatar;
+
 	const currentStatus =
 		STATUS[presence?.discord_status ?? "offline"] ?? STATUS.offline;
+
+	const avatarFile = `/avatars/${profile.username}.${extension}`;
+	const avatarDiscord = avatar
+		? `https://cdn.discordapp.com/avatars/${profile.discordId}/${avatar}.${avatar.startsWith("a_") ? "webp?animated=true" : "png"}`
+		: `/avatars/${profile.username}.png`;
+
+	const avatarSrc =
+		extIndex >= AVATAR_EXTENSIONS.length ? avatarDiscord : avatarFile;
 
 	return (
 		<span className="relative">
@@ -154,7 +127,10 @@ function UserIcon({
 				width={iconSize}
 				height={iconSize}
 				priority
-				onError={() => setExtension(extension === "png" ? "jpg" : "discord")}
+				unoptimized
+				onError={() =>
+					setExtIndex((i) => Math.min(i + 1, AVATAR_EXTENSIONS.length))
+				}
 				className="flex-1 rounded-2xl border border-ctp-surface1"
 			/>
 
@@ -240,6 +216,41 @@ function Socials({ expand, profile }: { expand: boolean; profile: Profile }) {
 			))}
 		</ul>
 	);
+}
+
+function getActivityTimestamp(now: number, activity?: Activity) {
+	if (!activity?.timestamps) return undefined;
+
+	const { start, end } = activity.timestamps;
+
+	const formatTime = (ms: number) => {
+		const totalSec = Math.floor(ms / 1000);
+		const h = Math.floor(totalSec / 3600);
+		const m = Math.floor((totalSec % 3600) / 60);
+		const s = String(totalSec % 60).padStart(2, "0");
+
+		if (h > 0) {
+			const padM = String(m).padStart(2, "0");
+			return `${h}:${padM}:${s}`;
+		}
+
+		return `${m}:${s}`;
+	};
+
+	// listening or watching
+	if (start && end) {
+		const currentMs = Math.max(0, Math.min(now - start, end - start));
+		const totalMs = end - start;
+		return `${formatTime(currentMs)} / ${formatTime(totalMs)}`;
+	}
+
+	// activities with elapsed time
+	if (start) {
+		const elapsedMs = Math.max(0, now - start);
+		return `${formatTime(elapsedMs)}`;
+	}
+
+	return undefined;
 }
 
 function ActivityDisplay({
