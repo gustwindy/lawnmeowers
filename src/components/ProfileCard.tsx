@@ -2,7 +2,12 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-import { getActivityImageUrl, usePresence } from "@/hooks/usePresence";
+import { usePresence } from "@/hooks/usePresence";
+import {
+	type DisplayNameStyles,
+	displayNameStyle,
+	getActivityImageUrl,
+} from "@/lib/discord";
 import type { Profile } from "@/types/profile";
 
 export default function ProfileCard({
@@ -14,6 +19,25 @@ export default function ProfileCard({
 }) {
 	const iconSize = expand ? 256 : 128;
 	const presence = usePresence(profile.discordId);
+
+	const nameStyle = displayNameStyle(
+		(presence?.discord_user as Record<string, unknown> | undefined)
+			?.display_name_styles as DisplayNameStyles,
+	);
+
+	const [extension, setExtension] = useState("png");
+
+	const avatar = presence?.discord_user?.avatar
+		? `https://cdn.discordapp.com/avatars/${profile.discordId}/${presence.discord_user.avatar}.png`
+		: null;
+
+	const avatarSrc =
+		extension === "png"
+			? `/avatars/${profile.username}.png`
+			: extension === "jpg"
+				? `/avatars/${profile.username}.jpg`
+				: (avatar ?? `/avatars/${profile.username}.png`);
+
 	const activity =
 		presence?.activities.find((a) => a.type === 0) ??
 		presence?.activities.find((a) => a.type === 2) ??
@@ -28,7 +52,15 @@ export default function ProfileCard({
 		return () => clearInterval(interval);
 	}, [activity?.timestamps?.start]);
 
-	const online = presence?.discord_status !== "offline";
+	const status: Record<string, { color: string; label: string }> = {
+		online: { color: "bg-ctp-green", label: "Online" },
+		idle: { color: "bg-ctp-yellow", label: "Idle" },
+		dnd: { color: "bg-ctp-red", label: "Do Not Disturb" },
+		offline: { color: "bg-ctp-surface1", label: "Offline" },
+	};
+
+	const currentStatus =
+		status[presence?.discord_status ?? "offline"] ?? status.offline;
 
 	const activityImageUrl = activity ? getActivityImageUrl(activity) : null;
 
@@ -94,17 +126,30 @@ export default function ProfileCard({
 			>
 				<span className="relative">
 					<Image
-						src={`/avatars/${profile.username}.png`}
+						src={avatarSrc}
 						alt={profile.displayName}
 						width={iconSize}
 						height={iconSize}
 						priority
+						onError={() =>
+							setExtension(extension === "png" ? "jpg" : "discord")
+						}
 						className="flex-1 rounded-2xl border border-ctp-surface1"
 					/>
 
+					{/*{presence?.discord_user.avatar_decoration_data?.asset && (
+						<Image
+							src={`https://cdn.discordapp.com/avatar-decoration-presets/${presence.discord_user.avatar_decoration_data.asset}.png`}
+							alt=""
+							width={iconSize}
+							height={iconSize}
+							className="pointer-events-none absolute inset-0 z-10"
+						/>
+					)}*/}
+
 					<span
-						title={online ? "Online" : "Offline"}
-						className={`${online ? "bg-ctp-green" : "bg-ctp-overlay1"} ${expand ? "size-12 border-8" : "size-8 border-6"} absolute -bottom-2 -right-2 rounded-full border-ctp-base block`}
+						title={currentStatus.label}
+						className={`${currentStatus.color} ${expand ? "size-12 border-8" : "size-8 border-6"} absolute -bottom-2 -right-2 rounded-full border-ctp-base block`}
 					/>
 				</span>
 
@@ -124,6 +169,7 @@ export default function ProfileCard({
 						)}
 						<h2
 							className={`${expand ? `text-6xl` : "text-4xl"} text-ctp-mauve-50`}
+							style={nameStyle}
 						>
 							{profile.displayName}
 						</h2>
