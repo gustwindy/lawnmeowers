@@ -73,22 +73,24 @@ export default function ProfileCard({
 			?.display_name_styles as DisplayNameStyles,
 	);
 
+	// i am sorry for this. biome just makes it so unreadable when it puts those stupid new lines all over the html
+	const mainDiv = `${
+		expand
+			? "w-full max-w-3xl cursor items-start"
+			: "min-w-max cursor-pointer hover:scale-105 transition-transform duration-200"
+	} min-h-max inline-flex m-2 flex-col items-center justify-center p-6 border-ctp-surface0 border rounded-3xl bg-ctp-base`;
+
+	const layoutUpper = `${expand ? "items-start w-full" : "items-center"} gap-5 flex relative`;
+	const layoutTopRight = expand
+		? "flex flex-col flex-1 self-stretch"
+		: "contents";
+
 	return (
-		<div
-			className={`${
-				expand
-					? "w-full max-w-3xl cursor items-start"
-					: "min-w-max cursor-pointer hover:scale-105 transition-transform duration-200"
-			} min-h-max inline-flex m-2 flex-col items-center justify-center p-6 border-ctp-surface0 border rounded-3xl bg-ctp-base`}
-		>
-			<div
-				className={`${expand ? "items-start w-full" : "items-center"} gap-5 flex relative`}
-			>
+		<div className={mainDiv}>
+			<div className={layoutUpper}>
 				<UserIcon expand={expand} profile={profile} presence={presence} />
 
-				<div
-					className={expand ? "flex flex-col flex-1 self-stretch" : "contents"}
-				>
+				<div className={layoutTopRight}>
 					<UserInfo expand={expand} profile={profile} nameStyle={nameStyle} />
 
 					<ActivityDisplay expand={expand} presence={presence} />
@@ -183,6 +185,8 @@ function UserInfo({
 	profile: Profile;
 	nameStyle: CSSProperties;
 }) {
+	const biggerOnExpand = `${expand ? `text-6xl` : "text-4xl"} text-ctp-mauve-50`;
+
 	return (
 		<div className={expand ? "flex flex-col" : "flex flex-col pr-5"}>
 			{!expand && (
@@ -199,10 +203,7 @@ function UserInfo({
 					</span>
 				</p>
 			)}
-			<h2
-				className={`${expand ? `text-6xl` : "text-4xl"} text-ctp-mauve-50`}
-				style={nameStyle}
-			>
+			<h2 className={biggerOnExpand} style={nameStyle}>
 				{profile.displayName}
 			</h2>
 			<p className="opacity-75">@{profile.username}</p>
