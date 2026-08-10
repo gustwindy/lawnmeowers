@@ -159,7 +159,13 @@ export default function ProfileCard({
 					<div className={expand ? "flex flex-col" : "flex flex-col pr-5"}>
 						{!expand && (
 							<p className="opacity-50" title={profile.roles.join(", ")}>
-								{profile.roles[0]}
+								<Image
+									src={`/icons/roles/${profile.roles[0].toLowerCase()}.png`}
+									width={16}
+									height={16}
+									alt={profile.roles[0]}
+									className="inline-block"
+								/>
 								<span className="text-xs opacity-75 ml-1">
 									{profile.roles.length <= 1
 										? ""
@@ -206,9 +212,20 @@ export default function ProfileCard({
 				</div>
 
 				{expand && (
-					<p className="absolute top-0 right-0 opacity-50 text-right">
-						{profile.roles.join(", ")}
-					</p>
+					<ul className="flex gap-2 absolute top-0 right-0 opacity-50 text-right">
+						{profile.roles.map((role) => (
+							<li key={role}>
+								<Image
+									src={`/icons/roles/${role.toLowerCase()}.png`}
+									width={16}
+									height={16}
+									alt={profile.roles[0]}
+									className="inline-block"
+								/>
+								<span className="ml-1">{role}</span>
+							</li>
+						))}
+					</ul>
 				)}
 			</div>
 
@@ -227,7 +244,7 @@ export default function ProfileCard({
 							className="bg-ctp-surface0 hover:bg-ctp-surface2 transition-background-color duration-100 hover:scale-y-104 hover:scale-x-102 rounded-full border-ctp-surface2 border m-1 p-1.5 flex gap-2 items-center"
 						>
 							<Image
-								src={`/icons/${social.platform}.png`}
+								src={`/icons/services/${social.platform}.png`}
 								alt={social.handle}
 								width={32}
 								height={32}
