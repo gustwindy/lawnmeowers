@@ -39,6 +39,21 @@
 					"url": "https://guhw.dev/"
 				}
 			]
+		},
+		{
+			"username": "req",
+			"displayName": "req",
+			"bio": "Nema mamuta na proljeće🦣",
+			"roles": ["Member"],
+			"discordId": "645737099731009586",
+			"showPresence": true,
+			"socials": [
+				{
+					"platform": "spotify",
+					"handle": "req",
+					"url": "https://open.spotify.com/user/kwci3y0g4xfj6b8s8h7zf3eao"
+				}
+			]
 		}
 	]
 }
