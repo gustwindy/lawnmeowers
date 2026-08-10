@@ -134,7 +134,7 @@ export default function ProfileCard({
 					</div>
 
 					{expand && activity && activityImageUrl && (
-						<div className="flex items-center mt-auto min-h-max bg-ctp-surface0 p-2 gap-2 rounded-2xl">
+						<div className="border border-ctp-surface2 flex items-center mt-auto min-h-max bg-ctp-surface0 p-2 gap-2 rounded-2xl">
 							<div className="relative w-32">
 								<Image
 									src={activityImageUrl}
