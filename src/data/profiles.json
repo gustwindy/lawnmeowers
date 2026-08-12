@@ -124,6 +124,26 @@
 					"url": "https://www.roblox.com/users/3312754896/profile"
 				}
 			]
+		},
+		{
+			"username": "httpsachelois",
+			"displayName": "achelois",
+			"bio": "meow typeshit",
+			"roles": ["Member"],
+			"discordId": "619229749725888532",
+			"showPresence": true,
+			"socials": [
+				{
+					"platform": "roblox",
+					"handle": "HttpsAchelois",
+					"url": "https://www.roblox.com/users/968699021/profile"
+				},
+				{
+					"platform": "spotify",
+					"handle": "HttpsAchelois",
+					"url": "https://open.spotify.com/user/6j4aicllbn3m6qvypobxbzvqu"
+				}
+			]
 		}
 	]
 }
