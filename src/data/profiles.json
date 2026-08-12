@@ -144,6 +144,15 @@
 					"url": "https://open.spotify.com/user/6j4aicllbn3m6qvypobxbzvqu"
 				}
 			]
+		},
+		{
+			"username": "osage",
+			"displayName": "osage",
+			"bio": "uhu 😢",
+			"roles": ["Member"],
+			"discordId": "1106258874958348391",
+			"showPresence": true,
+			"socials": []
 		}
 	]
 }
