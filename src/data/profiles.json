@@ -89,6 +89,21 @@
 					"url": "https://www.roblox.com/users/4083299927/profile"
 				}
 			]
+		},
+		{
+			"username": "vivi",
+			"displayName": "vivi",
+			"bio": "owo sex @faworee_",
+			"roles": ["Founder", "Member"],
+			"discordId": "779028362542186567",
+			"showPresence": true,
+			"socials": [
+				{
+					"platform": "roblox",
+					"handle": "silkv7a",
+					"url": "https://www.roblox.com/users/574919813/profile"
+				}
+			]
 		}
 	]
 }
