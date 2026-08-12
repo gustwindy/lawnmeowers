@@ -44,10 +44,10 @@ export default function ProfileCard({
 	const mainDiv = `${
 		expand
 			? "w-full max-w-3xl cursor items-start"
-			: "min-w-max cursor-pointer hover:scale-105 transition-transform duration-200"
-	} min-h-max inline-flex m-2 flex-col items-center justify-center p-6 border-ctp-surface0 border rounded-3xl bg-ctp-base`;
+			: "w-max min-w-120 max-w-1/2 cursor-pointer hover:scale-105 transition-transform duration-200"
+	} min-h-max inline-flex m-2 flex-col items-center justify-top p-6 border-ctp-surface0 border rounded-3xl bg-ctp-base`;
 
-	const layoutUpper = `${expand ? "items-start w-full" : "items-center"} gap-5 flex relative`;
+	const layoutUpper = `${expand ? "items-start w-full" : "items-center mr-auto"} gap-5 flex relative`;
 	const layoutTopRight = expand
 		? "flex flex-col flex-1 self-stretch"
 		: "contents";
