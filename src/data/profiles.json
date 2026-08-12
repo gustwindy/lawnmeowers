@@ -4,7 +4,7 @@
 			"username": "nyarw",
 			"displayName": "nyarw",
 			"bio": "meow meow :3",
-			"roles": ["Founder", "Member"],
+			"roles": ["Member"],
 			"discordId": "571052016382640128",
 			"showPresence": true,
 			"socials": [
@@ -37,6 +37,21 @@
 					"platform": "website",
 					"handle": "guhw.dev",
 					"url": "https://guhw.dev/"
+				}
+			]
+		},
+		{
+			"username": "porshii",
+			"displayName": "porshii",
+			"bio": "porshii",
+			"roles": ["Member"],
+			"discordId": "255779311238250497",
+			"showPresence": true,
+			"socials": [
+				{
+					"platform": "youtube",
+					"handle": "porshii",
+					"url": "https://www.youtube.com/@porshii"
 				}
 			]
 		}
