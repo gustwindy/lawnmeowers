@@ -69,6 +69,26 @@
 					"url": "https://open.spotify.com/user/kwci3y0g4xfj6b8s8h7zf3eao"
 				}
 			]
+		},
+		{
+			"username": "faworee",
+			"displayName": "faworee",
+			"bio": "🫄",
+			"roles": ["Member"],
+			"discordId": "1449901571264745557",
+			"showPresence": true,
+			"socials": [
+				{
+					"platform": "website",
+					"handle": "faworee.com",
+					"url": "https://faworee.com/"
+				},
+				{
+					"platform": "roblox",
+					"handle": "Faworee",
+					"url": "https://www.roblox.com/users/4083299927/profile"
+				}
+			]
 		}
 	]
 }
