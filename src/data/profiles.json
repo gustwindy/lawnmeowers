@@ -104,6 +104,26 @@
 					"url": "https://www.roblox.com/users/574919813/profile"
 				}
 			]
+		},
+		{
+			"username": "pxerogi",
+			"displayName": "pie the rogi",
+			"bio": "meow :з",
+			"roles": ["Member"],
+			"discordId": "946424785993343016",
+			"showPresence": true,
+			"socials": [
+				{
+					"platform": "spotify",
+					"handle": ".pierogi",
+					"url": "https://open.spotify.com/user/317dvpahogr2dxcpvhic7ln6pwce"
+				},
+				{
+					"platform": "roblox",
+					"handle": "pxerogi",
+					"url": "https://www.roblox.com/users/3312754896/profile"
+				}
+			]
 		}
 	]
 }
